@@ -4,10 +4,60 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="../../CSS/night.css">
 	<title>计算机网络与安全主页</title>
+	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+	<script src="../../md2html.js">
+        function showMarkdown()
+{
+    // 获取表单变量
+    var f=form;
+    // 创建XMLHttpRequest对象
+    var xmlhttp;
+    if (window.XMLHttpRequest)
+    {
+        // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+        xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {
+        // IE6, IE5 浏览器执行代码
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+	
+	
+    // 得到服务器响应后，对得到的Markdown文档进行解析
+    xmlhttp.onreadystatechange=function()
+    {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            // 这里调用了marked框架中的marked函数实现Markdown2HTML的解析
+            document.getElementById("content").innerHTML=marked(xmlhttp.responseText);
+        }
+    }
+	
+	
+    // 向服务器发送请求，获取你需要的Markdown文档
+    xmlhttp.open("GET",f.q.value,true);
+    xmlhttp.send();
+}
+    </script>
 	</head>
 <body>
 	<h1>计算机网络与安全主页</h1>
 	<p>吴杰</p>
 	<a href="课程笔记/第一章/第一章 计算机网络和因特网.html">第一章 计算机网络和因特网</a>
+	<div class="container" style="margin-top:30px">
+        <form name="form" action="" method="post">
+            <select name="q">
+                <option class="active" alue="">选择一个笔记:</option>
+                <option value="a.md">第一章</option>
+            </select>
+            <input type="button" value="显示" onclick="showMarkdown()">
+        </form>
+    .
+    .
+    .
+    // 在这里编辑空的div节点，用于后面展示解析后的内容
+    <div id="content"></div>
+    </div>
 	</body>
 </html>
